@@ -21,7 +21,7 @@ pod 'KGoogleMap'
 
 ## Author
 
-72160249, <michelle.raouf@outlook.com>
+Michelle Raouf, <michelle.raouf@outlook.com>
 
 ## License
 
