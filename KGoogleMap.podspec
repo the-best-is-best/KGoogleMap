@@ -27,15 +27,4 @@ Pod::Spec.new do |s|
   # Specify the dependencies
   s.dependency 'GoogleMaps', '~> 8.4.0'  # Google Maps SDK for iOS
 
-  # Ensure dynamic linking by adding this line
-  s.static_framework = false
-
-  # If you have resources (like images or JSON files), uncomment the following line
-  # s.resource_bundles = { 'KGoogleMap' => ['KGoogleMap/Assets/*.png'] }
-
-  # Specify public header files if necessary
-  # s.public_header_files = 'KGoogleMap/Classes/**/*.h'
-
-  # Framework dependencies (if you are using UIKit or others)
-  s.frameworks = 'UIKit', 'GoogleMaps'
 end
