@@ -1,116 +1,26 @@
+//
+//  KMapView.swift
+//  KGoogleMap
+//
+//  Created by Michelle Raouf on 29/09/2024.
+//
+
 import SwiftUI
 import GoogleMaps
-import CoreLocation
-
-// UIViewRepresentable for Google Maps
-struct KMapViewRepresentable: UIViewRepresentable {
-    // Binding for total distance
-    @Binding var totalDistance: CLLocationDistance
-
-    // Coordinator to handle events
-    class Coordinator: NSObject, CLLocationManagerDelegate {
-        var mapView: GMSMapView?
-        var locationManager = CLLocationManager()
-        var previousLocation: CLLocation?
-        var polyline: GMSPolyline?
-        @Binding var totalDistance: CLLocationDistance
-
-        init(totalDistance: Binding<CLLocationDistance>) {
-            self._totalDistance = totalDistance
-            super.init()
-            
-            // Set up the location manager
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.requestWhenInUseAuthorization()
-        }
-
-        // Location manager delegate method
-        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-            guard let location = locations.first else { return }
-
-            // Calculate distance and update total distance
-            if let previousLocation = self.previousLocation {
-                let distance = location.distance(from: previousLocation)
-                
-                self.totalDistance += distance
-            }
-
-            // Update polyline to draw the route
-            if let path = polyline?.path {
-                let mutablePath = GMSMutablePath(path: path)
-                mutablePath.add(location.coordinate)
-                polyline?.path = mutablePath
-            } else {
-                let path = GMSMutablePath()
-                path.add(location.coordinate)
-                
-                let newPolyline = GMSPolyline(path: path)
-                newPolyline.strokeColor = .red
-                newPolyline.strokeWidth = 5.0
-                newPolyline.map = mapView
-                polyline = newPolyline
-            }
-
-            // Set camera position to current location
-            let zoom: Float = 18.0
-            let camera = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
-                                                  longitude: location.coordinate.longitude,
-                                                  zoom: zoom)
-            mapView?.animate(to: camera)
-
-            self.previousLocation = location
-        }
-
-        // Authorization status change handler
-        func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-            if status == .authorizedWhenInUse || status == .authorizedAlways {
-                locationManager.startUpdatingLocation()
-                mapView?.isMyLocationEnabled = true
-                mapView?.settings.myLocationButton = true
-            } else {
-                // Handle authorization denied state if needed
-                locationManager.stopUpdatingLocation()
-            }
-        }
-
-        public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-            print("Location Manager failed with error: \(error.localizedDescription)")
-        }
-    }
-
-    // Make coordinator
-    func makeCoordinator() -> Coordinator {
-        return Coordinator(totalDistance: $totalDistance)
-    }
-
-    // Make UIView
-    func makeUIView(context: Context) -> GMSMapView {
-        let mapView = GMSMapView()
-        mapView.isMyLocationEnabled = true
-        mapView.settings.myLocationButton = true
-        
-        // Set coordinator's mapView
-        context.coordinator.mapView = mapView
-
-        // Start updating location
-        context.coordinator.locationManager.requestWhenInUseAuthorization()
-        context.coordinator.locationManager.startUpdatingLocation()
-        
-        return mapView
-    }
-
-    func updateUIView(_ uiView: GMSMapView, context: Context) {
-        // Update your UIView if needed
-    }
-}
 
 // UIView subclass to wrap KMapViewRepresentable
 @objc public class KMapView: UIView {
-    // Binding for total distance
-    @Binding var totalDistance: CLLocationDistance
+    // Property for total distance
+    private var _totalDistance: CLLocationDistance
 
-    init(totalDistance: Binding<CLLocationDistance>) {
+    // Public property for total distance, exposing it for Objective-C
+    @objc public var totalDistance: CLLocationDistance {
+        get { _totalDistance }
+        set { _totalDistance = newValue }
+    }
+
+    // Initializer accepting CLLocationDistance
+    @objc public init(totalDistance: CLLocationDistance) {
         self._totalDistance = totalDistance
         super.init(frame: .zero)
         setupView()
@@ -121,7 +31,13 @@ struct KMapViewRepresentable: UIViewRepresentable {
     }
     
     private func setupView() {
-        let representable = KMapViewRepresentable(totalDistance: $totalDistance)
+        // Create a Binding to use in the representable
+        let totalDistanceBinding = Binding<CLLocationDistance>(
+            get: { self._totalDistance },
+            set: { self._totalDistance = $0 }
+        )
+
+        let representable = KMapViewRepresentable(totalDistance: totalDistanceBinding)
         let swiftUIController = UIHostingController(rootView: representable)
         swiftUIController.view.frame = bounds
         swiftUIController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
