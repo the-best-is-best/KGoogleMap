@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'KGoogleMap'
-  s.version          = '0.1.0-beta.1'  # Use rc or beta versioning as needed
+  s.version          = '0.1.0-beta.2'  # Use rc or beta versioning as needed
   s.summary          = 'A library for integrating Google Maps with CocoaPods Kotlin Multiplatform'
   s.description      = 'KGoogleMap is a support controller for Google Maps to use it with Kotlin Multiplatform.'
 
@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   s.source_files = 'KGoogleMap/Classes/**/*'
 
   # Specify the dependencies
-  s.dependency 'GoogleMaps', '~> 8.4.0'  # Google Maps SDK for iOS
+  s.dependency 'GoogleMaps', '~> 9.1.1.0'  # Google Maps SDK for iOS
   s.static_framework = true
 
 

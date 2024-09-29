@@ -1,0 +1,6 @@
+framework module KGoogleMap {
+  umbrella header "KGoogleMap-umbrella.h"
+
+  export *
+  module * { export * }
+}

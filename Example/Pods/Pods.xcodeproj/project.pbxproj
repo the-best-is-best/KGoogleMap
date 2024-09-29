@@ -17,13 +17,14 @@
 				678A3F94D584ED243DBECE7BFE0AB604 /* PBXTargetDependency */,
 			);
 			name = GoogleMaps;
+			productName = GoogleMaps;
 		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
 		0C06A4981758EB3860C710A58B0AB9DB /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FA0BC7919F4EB2B04FCEE0290590E124 /* GoogleMaps.bundle */; };
 		57B04CFDDEBE51D01E5E11D34BE2F28E /* KGoogleMapInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6F58C7F6D35DBAC10A217974D0B149 /* KGoogleMapInit.swift */; };
-		AE513325DABFAFBCCC76476ED96E761C /* GoogleMapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C98E34D63AA82EB68E6ECECF639ADC4 /* GoogleMapController.swift */; };
+		AE513325DABFAFBCCC76476ED96E761C /* KMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C98E34D63AA82EB68E6ECECF639ADC4 /* KMapView.swift */; };
 		B99B87DC864A9998473903FFFE4B97AA /* KGoogleMap-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF327AF130CA635333F06BD835A6098 /* KGoogleMap-dummy.m */; };
 		C05B94E52AE3A988968CF0897172DFA2 /* FileMarkerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0401DDBFB6361FBFFFD062FB75EF62AB /* FileMarkerData.swift */; };
 		E5AA6D1D66A2EC99A1BA79E4C3149E59 /* Pods-KGoogleMap_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E67A4A83384C4528E028906EEA2D8FA5 /* Pods-KGoogleMap_Tests-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -64,31 +65,31 @@
 
 /* Begin PBXFileReference section */
 		0401DDBFB6361FBFFFD062FB75EF62AB /* FileMarkerData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FileMarkerData.swift; sourceTree = "<group>"; };
-		0A53E475165344B8F3061A8A7733811F /* KGoogleMap.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = KGoogleMap.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		0E9E63CFD89285D0FD121CEFCAFA4D23 /* GoogleMaps.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GoogleMaps.xcframework; path = Maps/Frameworks/GoogleMaps.xcframework; sourceTree = "<group>"; };
+		0A53E475165344B8F3061A8A7733811F /* KGoogleMap.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = KGoogleMap.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		0E9E63CFD89285D0FD121CEFCAFA4D23 /* GoogleMaps.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = GoogleMaps.xcframework; path = Maps/Frameworks/GoogleMaps.xcframework; sourceTree = "<group>"; };
 		0F06C259C2A3E2895B4D56903AD5480C /* GoogleMaps-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "GoogleMaps-xcframeworks.sh"; sourceTree = "<group>"; };
 		182ACB02BF9910ED3E2DAFEDDD3DD9D3 /* ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist"; sourceTree = "<group>"; };
 		1B77745E7A21D8060372222B59090AEA /* KGoogleMap-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KGoogleMap-umbrella.h"; sourceTree = "<group>"; };
 		21BC9DE5EE18F27517C52ABD3FBF38ED /* GoogleMaps-GoogleMapsResources */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "GoogleMaps-GoogleMapsResources"; path = GoogleMapsResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		27C7F6BA789A115DB55172BD659C490F /* GoogleMaps.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleMaps.release.xcconfig; sourceTree = "<group>"; };
-		32FD77E5ABC360AFBCD5F36C831C45F8 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		32FD77E5ABC360AFBCD5F36C831C45F8 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4EFF0310AD3AE548FE03C46CA47D905C /* GMSEmpty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GMSEmpty.h; path = Base/Sources/GMSEmpty.h; sourceTree = "<group>"; };
 		561CC66990046901F9E6FD8F5B11E1AC /* KGoogleMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KGoogleMap.debug.xcconfig; sourceTree = "<group>"; };
 		6A482F21E494A087C5F43C769FD8BDAC /* Pods-KGoogleMap_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-KGoogleMap_Tests.modulemap"; sourceTree = "<group>"; };
-		6C98E34D63AA82EB68E6ECECF639ADC4 /* GoogleMapController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GoogleMapController.swift; path = KGoogleMap/Classes/GoogleMapController.swift; sourceTree = "<group>"; };
+		6C98E34D63AA82EB68E6ECECF639ADC4 /* KMapView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KMapView.swift; path = KGoogleMap/Classes/KMapView.swift; sourceTree = "<group>"; };
 		779E1A340D7B220D775F6D4B3518AD69 /* Pods-KGoogleMap_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-KGoogleMap_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		87D5E6F5F8ADDA12965556815D1842EC /* Pods-KGoogleMap_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-KGoogleMap_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		8AF5E3AD22402A9A0F074C0B501B9618 /* GoogleMaps.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleMaps.debug.xcconfig; sourceTree = "<group>"; };
-		8BC512B6C7DC4A962F54F92EF6FA4DEF /* GoogleMapsBase.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GoogleMapsBase.xcframework; path = Base/Frameworks/GoogleMapsBase.xcframework; sourceTree = "<group>"; };
+		8BC512B6C7DC4A962F54F92EF6FA4DEF /* GoogleMapsBase.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = GoogleMapsBase.xcframework; path = Base/Frameworks/GoogleMapsBase.xcframework; sourceTree = "<group>"; };
 		911908DE2F46421B1A8A4E17AFF5D2D4 /* KGoogleMap */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = KGoogleMap; path = libKGoogleMap.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A5B8BC8C74D3B0ED1053631A90D0FDD6 /* Pods-KGoogleMap_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-KGoogleMap_Tests-dummy.m"; sourceTree = "<group>"; };
 		A9DEE17055AF7C8A114BC4EC03D46E7E /* Pods-KGoogleMap_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-KGoogleMap_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		AC6F58C7F6D35DBAC10A217974D0B149 /* KGoogleMapInit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KGoogleMapInit.swift; path = KGoogleMap/Classes/KGoogleMapInit.swift; sourceTree = "<group>"; };
 		B1D7C91A203DB7A2CC9904A3AEE4DFF2 /* KGoogleMap-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KGoogleMap-prefix.pch"; sourceTree = "<group>"; };
 		C4C38A2D5BC41C194ACC7AF256D348A6 /* Pods-KGoogleMap_Tests */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "Pods-KGoogleMap_Tests"; path = "libPods-KGoogleMap_Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C877A6D8B3070EEF33D4897D54D566E7 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
-		CED191CEE8BA81DC6EBCE82D9E02FF60 /* GoogleMapsCore.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GoogleMapsCore.xcframework; path = Maps/Frameworks/GoogleMapsCore.xcframework; sourceTree = "<group>"; };
+		C877A6D8B3070EEF33D4897D54D566E7 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		CED191CEE8BA81DC6EBCE82D9E02FF60 /* GoogleMapsCore.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = GoogleMapsCore.xcframework; path = Maps/Frameworks/GoogleMapsCore.xcframework; sourceTree = "<group>"; };
 		E67A4A83384C4528E028906EEA2D8FA5 /* Pods-KGoogleMap_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-KGoogleMap_Tests-umbrella.h"; sourceTree = "<group>"; };
 		EB4D8FBE947BD5A2CBBB123DDEC978E1 /* KGoogleMap.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = KGoogleMap.modulemap; sourceTree = "<group>"; };
 		ECB1EAA1B07DD84476DDE6342A1DC54E /* Pods-KGoogleMap_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-KGoogleMap_Tests-resources.sh"; sourceTree = "<group>"; };
@@ -200,7 +201,7 @@
 		A44DC3DF79CD03EC64881F30AA2080D4 /* KGoogleMap */ = {
 			isa = PBXGroup;
 			children = (
-				6C98E34D63AA82EB68E6ECECF639ADC4 /* GoogleMapController.swift */,
+				6C98E34D63AA82EB68E6ECECF639ADC4 /* KMapView.swift */,
 				AC6F58C7F6D35DBAC10A217974D0B149 /* KGoogleMapInit.swift */,
 				0503A73F013AF3B20970F2B16638E64B /* Model */,
 				93669F9A8598504B0852A7B3FA26B346 /* Pod */,
@@ -302,7 +303,6 @@
 				D7827B693EAE5B8D0D485F6CFD1866A6 /* Maps */,
 				88BA28A8B83F8A9762D7F92E0A128F8B /* Support Files */,
 			);
-			name = GoogleMaps;
 			path = GoogleMaps;
 			sourceTree = "<group>";
 		};
@@ -401,7 +401,6 @@
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			minimizedProjectReferenceProxies = 0;
 			productRefGroup = A0CE79890CB5EDB26E2B0AB3B61FAEFC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -480,7 +479,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C05B94E52AE3A988968CF0897172DFA2 /* FileMarkerData.swift in Sources */,
-				AE513325DABFAFBCCC76476ED96E761C /* GoogleMapController.swift in Sources */,
+				AE513325DABFAFBCCC76476ED96E761C /* KMapView.swift in Sources */,
 				B99B87DC864A9998473903FFFE4B97AA /* KGoogleMap-dummy.m in Sources */,
 				57B04CFDDEBE51D01E5E11D34BE2F28E /* KGoogleMapInit.swift in Sources */,
 			);
@@ -763,8 +762,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};

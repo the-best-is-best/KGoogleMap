@@ -8,8 +8,8 @@
 import Foundation
 import GoogleMaps
 
-@objc class KGoogleMapInit: NSObject {
-    @objc static func provideAPIKey(key: String) {
+@objc  public class KGoogleMapInit: NSObject {
+    @objc public static func provideAPIKey(key: String) {
         GMSServices.provideAPIKey(key)
     }
 }
