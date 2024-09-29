@@ -1,0 +1,27 @@
+PODS:
+  - GoogleMaps (8.4.0):
+    - GoogleMaps/Maps (= 8.4.0)
+  - GoogleMaps/Base (8.4.0)
+  - GoogleMaps/Maps (8.4.0):
+    - GoogleMaps/Base
+  - KGoogleMap (0.1.0-beta.1):
+    - GoogleMaps (~> 8.4.0)
+
+DEPENDENCIES:
+  - KGoogleMap (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - GoogleMaps
+
+EXTERNAL SOURCES:
+  KGoogleMap:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  GoogleMaps: 8939898920281c649150e0af74aa291c60f2e77d
+  KGoogleMap: 811838747a40aad9a61be23a7ecfb5a92ce3d995
+
+PODFILE CHECKSUM: c85608fa2e4bad2966e1a0c99e828c432b20f82d
+
+COCOAPODS: 1.15.2

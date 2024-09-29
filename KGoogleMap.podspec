@@ -8,35 +8,32 @@
 
 Pod::Spec.new do |s|
   s.name             = 'KGoogleMap'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of KGoogleMap.'
+  s.version          = '0.1.0-beta.1'  # Use rc or beta versioning as needed
+  s.summary          = 'A library for integrating Google Maps with cocopods kotlin Multiplatform'
 
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
+  s.description      = 'KGoogleMap is a support controller for Google Maps to use it with Kotlin Multiplatform.'
 
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
-
-  s.homepage         = 'https://github.com/72160249/KGoogleMap'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
+                       s.homepage         = 'https://github.com/the-best-is-best/KGoogleMap'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { '72160249' => 'michelle.raouf@52ndsolution.net' }
-  s.source           = { :git => 'https://github.com/72160249/KGoogleMap.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.authors          = { 'the-best-is-best' => 'michelle.raouf@outlook.com' }
+  s.source           = { :git => 'https://github.com/the-best-is-best/KGoogleMap.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '10.0'
+  # Specify the deployment target for iOS
+  s.ios.deployment_target = '15'
+  s.swift_version    = '5.5'
 
+  # Specify the source files for the KMM library
   s.source_files = 'KGoogleMap/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'KGoogleMap' => ['KGoogleMap/Assets/*.png']
-  # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  # Specify the dependencies
+  s.dependency 'GoogleMaps', '~> 8.4.0'  # Google Maps SDK for iOS
+
+  # If you have resources (like images or JSON files), uncomment the following line
+  # s.resource_bundles = { 'KGoogleMap' => ['KGoogleMap/Assets/*.png'] }
+
+  # Specify public header files if necessary
+  # s.public_header_files = 'KGoogleMap/Classes/**/*.h'
+
+  # Framework dependencies (if you are using UIKit or others)
+  s.frameworks = 'UIKit', 'GoogleMaps'
 end
