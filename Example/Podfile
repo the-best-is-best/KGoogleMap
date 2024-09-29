@@ -1,0 +1,6 @@
+use_frameworks!
+target 'KGoogleMap_Tests' do
+  pod 'KGoogleMap', :path => '../'
+  
+  
+end
