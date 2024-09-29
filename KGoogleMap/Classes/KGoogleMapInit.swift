@@ -9,8 +9,7 @@ import Foundation
 import GoogleMaps
 
 @objc class KGoogleMapInit: NSObject {
-  @objc  static func provideAPIKey(key: String){
-      GMSServices.provideAPIKey(key)
-
+    @objc static func provideAPIKey(key: String) {
+        GMSServices.provideAPIKey(key)
     }
 }

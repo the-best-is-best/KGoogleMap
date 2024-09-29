@@ -7,7 +7,7 @@ Copyright 2024 Google LLC
 
 ## KGoogleMap
 
-Copyright (c) 2024 72160249 <michelle.raouf@52ndsolution.net>
+Copyright (c) 2024 72160249 <michelle.raouf@outlook.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

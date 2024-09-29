@@ -1,6 +1,5 @@
 # KGoogleMap
 
-[![CI Status](https://img.shields.io/travis/72160249/KGoogleMap.svg?style=flat)](https://travis-ci.org/72160249/KGoogleMap)
 [![Version](https://img.shields.io/cocoapods/v/KGoogleMap.svg?style=flat)](https://cocoapods.org/pods/KGoogleMap)
 [![License](https://img.shields.io/cocoapods/l/KGoogleMap.svg?style=flat)](https://cocoapods.org/pods/KGoogleMap)
 [![Platform](https://img.shields.io/cocoapods/p/KGoogleMap.svg?style=flat)](https://cocoapods.org/pods/KGoogleMap)
@@ -22,7 +21,7 @@ pod 'KGoogleMap'
 
 ## Author
 
-72160249, michelle.raouf@52ndsolution.net
+72160249, <michelle.raouf@outlook.com>
 
 ## License
 
