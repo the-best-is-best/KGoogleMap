@@ -26,5 +26,7 @@ Pod::Spec.new do |s|
 
   # Specify the dependencies
   s.dependency 'GoogleMaps', '~> 8.4.0'  # Google Maps SDK for iOS
+  s.static_framework = true
+
 
 end
