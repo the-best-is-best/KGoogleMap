@@ -16,10 +16,7 @@ import GoogleMaps
     // Public property for total distance, exposing it for Objective-C
     @objc public var totalDistance: CLLocationDistance {
         get { _totalDistance }
-        set {
-            _totalDistance = newValue
-            // If needed, you can update the SwiftUI view here
-        }
+        set { _totalDistance = newValue }
     }
 
     // Initializer accepting CLLocationDistance
@@ -34,7 +31,13 @@ import GoogleMaps
     }
     
     private func setupView() {
-        let representable = KMapViewRepresentable(totalDistance: .constant(_totalDistance))
+        // Create a Binding to use in the representable
+        let totalDistanceBinding = Binding<CLLocationDistance>(
+            get: { self._totalDistance },
+            set: { self._totalDistance = $0 }
+        )
+
+        let representable = KMapViewRepresentable(totalDistance: totalDistanceBinding)
         let swiftUIController = UIHostingController(rootView: representable)
         swiftUIController.view.frame = bounds
         swiftUIController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
