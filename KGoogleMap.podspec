@@ -9,11 +9,10 @@
 Pod::Spec.new do |s|
   s.name             = 'KGoogleMap'
   s.version          = '0.1.0-beta.1'  # Use rc or beta versioning as needed
-  s.summary          = 'A library for integrating Google Maps with cocopods kotlin Multiplatform'
-
+  s.summary          = 'A library for integrating Google Maps with CocoaPods Kotlin Multiplatform'
   s.description      = 'KGoogleMap is a support controller for Google Maps to use it with Kotlin Multiplatform.'
 
-                       s.homepage         = 'https://github.com/the-best-is-best/KGoogleMap'
+  s.homepage         = 'https://github.com/the-best-is-best/KGoogleMap'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.authors          = { 'the-best-is-best' => 'michelle.raouf@outlook.com' }
   s.source           = { :git => 'https://github.com/the-best-is-best/KGoogleMap.git', :tag => s.version.to_s }
@@ -27,6 +26,9 @@ Pod::Spec.new do |s|
 
   # Specify the dependencies
   s.dependency 'GoogleMaps', '~> 8.4.0'  # Google Maps SDK for iOS
+
+  # Ensure dynamic linking by adding this line
+  s.static_framework = false
 
   # If you have resources (like images or JSON files), uncomment the following line
   # s.resource_bundles = { 'KGoogleMap' => ['KGoogleMap/Assets/*.png'] }
