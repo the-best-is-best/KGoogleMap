@@ -9,43 +9,47 @@ import SwiftUI
 import GoogleMaps
 
 // UIView subclass to wrap KMapViewRepresentable
+import UIKit
+import GoogleMaps
+
 @objc public class KMapView: UIView {
-    // Property for total distance
-    private var _totalDistance: CLLocationDistance
+    private var mapViewController: KMapViewRepresentable?
 
-    // Public property for total distance, exposing it for Objective-C
-    @objc public var totalDistance: CLLocationDistance {
-        get { _totalDistance }
-        set {
-            _totalDistance = newValue
-            // If needed, you can update the SwiftUI view here
-        }
-    }
-
-    // Initializer accepting CLLocationDistance
-    @objc public init(totalDistance: CLLocationDistance) {
-        self._totalDistance = totalDistance
+    @objc public init(camera: GMSCameraPosition? = nil, markers: [MarkerData] = []) {
         super.init(frame: .zero)
-        setupView()
-    }
-
-    // Required initializer for UIView
-    override public init(frame: CGRect) {
-        self._totalDistance = 0 // or any default value you prefer
-        super.init(frame: frame)
-        setupView()
+        setupMapView(camera: camera, markers: markers)
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
-    
-    private func setupView() {
-        let representable = KMapViewRepresentable(totalDistance: .constant(_totalDistance))
-        let swiftUIController = UIHostingController(rootView: representable)
-        swiftUIController.view.frame = bounds
-        swiftUIController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+    private func setupMapView(camera: GMSCameraPosition?, markers: [MarkerData]) {
+        mapViewController = KMapViewRepresentable(camera: camera, markers: markers)
         
-        addSubview(swiftUIController.view)
+        guard let mapViewController = mapViewController else { return }
+
+        // Embed the mapViewController's view into the KMapView
+        mapViewController.view.frame = self.bounds
+        mapViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.addSubview(mapViewController.view)
+
+        // Optionally, attach the view controller to a parent view controller
+        if let parentViewController = findViewController() {
+            parentViewController.addChild(mapViewController)
+            mapViewController.didMove(toParent: parentViewController)
+        }
+    }
+
+    // Utility function to find the nearest parent view controller
+    private func findViewController() -> UIViewController? {
+        var responder: UIResponder? = self
+        while responder != nil {
+            responder = responder?.next
+            if let viewController = responder as? UIViewController {
+                return viewController
+            }
+        }
+        return nil
     }
 }

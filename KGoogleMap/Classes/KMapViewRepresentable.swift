@@ -2,107 +2,83 @@ import SwiftUI
 import GoogleMaps
 import CoreLocation
 
-// UIViewRepresentable for Google Maps
-struct KMapViewRepresentable: UIViewRepresentable {
-    // Binding for total distance
-    @Binding var totalDistance: CLLocationDistance
+public class KMapViewRepresentable: UIViewController, CLLocationManagerDelegate {
+    var camera: GMSCameraPosition?
+    var markers: [MarkerData] = []
+    
+    private var locationManager: CLLocationManager = CLLocationManager()
+    private var mapView: GMSMapView?
 
-    // Coordinator to handle events
-    class Coordinator: NSObject, CLLocationManagerDelegate {
-        var mapView: GMSMapView?
-        var locationManager = CLLocationManager()
-        var previousLocation: CLLocation?
-        var polyline: GMSPolyline?
-        @Binding var totalDistance: CLLocationDistance
+    init(camera: GMSCameraPosition? = nil, markers: [MarkerData] = []) {
+        self.camera = camera
+        self.markers = markers
+        super.init(nibName: nil, bundle: nil)
+        
+        // Configure CLLocationManager
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-        init(totalDistance: Binding<CLLocationDistance>) {
-            self._totalDistance = totalDistance
-            super.init()
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupMapView()
+        addMarkers(to: mapView)
+    }
+    
+    private func setupMapView() {
+        let options = GMSMapViewOptions()
+        options.camera = camera
+        options.frame = self.view.bounds
+        
+        mapView = GMSMapView(options: options)
+        mapView?.frame = self.view.bounds
+        mapView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        if let mapView = mapView {
+            self.view.addSubview(mapView)
+        }
+        
+        if camera == nil {
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    private func addMarkers(to mapView: GMSMapView?) {
+        guard let mapView = mapView else { return }
+        
+        for markerData in markers {
+            let marker = GMSMarker()
+            marker.position = CLLocationCoordinate2D(latitude: markerData.latitude, longitude: markerData.longitude)
+            marker.title = markerData.title
+            marker.snippet = markerData.snippet
             
-            // Set up the location manager
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.requestWhenInUseAuthorization()
-        }
-
-        // Location manager delegate method
-        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-            guard let location = locations.first else { return }
-
-            // Calculate distance and update total distance
-            if let previousLocation = self.previousLocation {
-                let distance = location.distance(from: previousLocation)
-                
-                self.totalDistance += distance
+            // Set a custom icon if provided
+            if let icon = markerData.icon {
+                marker.icon = icon
             }
-
-            // Update polyline to draw the route
-            if let path = polyline?.path {
-                let mutablePath = GMSMutablePath(path: path)
-                mutablePath.add(location.coordinate)
-                polyline?.path = mutablePath
-            } else {
-                let path = GMSMutablePath()
-                path.add(location.coordinate)
-                
-                let newPolyline = GMSPolyline(path: path)
-                newPolyline.strokeColor = .red
-                newPolyline.strokeWidth = 5.0
-                newPolyline.map = mapView
-                polyline = newPolyline
-            }
-
-            // Set camera position to current location
-            let zoom: Float = 18.0
-            let camera = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
-                                                  longitude: location.coordinate.longitude,
-                                                  zoom: zoom)
-            mapView?.animate(to: camera)
-
-            self.previousLocation = location
-        }
-
-        // Authorization status change handler
-        func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-            if status == .authorizedWhenInUse || status == .authorizedAlways {
-                locationManager.startUpdatingLocation()
-                mapView?.isMyLocationEnabled = true
-                mapView?.settings.myLocationButton = true
-            } else {
-                // Handle authorization denied state if needed
-                locationManager.stopUpdatingLocation()
-            }
-        }
-
-        public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-            print("Location Manager failed with error: \(error.localizedDescription)")
+            
+            marker.map = mapView
         }
     }
-
-    // Make coordinator
-    func makeCoordinator() -> Coordinator {
-        return Coordinator(totalDistance: $totalDistance)
+    
+    // CLLocationManagerDelegate method to update the location
+    public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            let userLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            camera = GMSCameraPosition.camera(withTarget: userLocation, zoom: 15)
+            
+            // Move the camera to the user's location
+            mapView?.camera = camera!
+            locationManager.stopUpdatingLocation()
+        }
     }
-
-    // Make UIView
-    func makeUIView(context: Context) -> GMSMapView {
-        let mapView = GMSMapView()
-        mapView.isMyLocationEnabled = true
-        mapView.settings.myLocationButton = true
-        
-        // Set coordinator's mapView
-        context.coordinator.mapView = mapView
-
-        // Start updating location
-        context.coordinator.locationManager.requestWhenInUseAuthorization()
-        context.coordinator.locationManager.startUpdatingLocation()
-        
-        return mapView
-    }
-
-    func updateUIView(_ uiView: GMSMapView, context: Context) {
-        // Update your UIView if needed
+    
+    public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Error retrieving location: \(error.localizedDescription)")
     }
 }
-
-
