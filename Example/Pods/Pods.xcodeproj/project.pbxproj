@@ -26,7 +26,7 @@
 		41BF2FD02CA9DDF00036D728 /* KMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BF2FCF2CA9DDF00036D728 /* KMapView.swift */; };
 		5060F7D95BE05252A21A92C22E876DA5 /* KGoogleMap-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B254F4B0A0D8EF7185641DF47522FBE /* KGoogleMap-dummy.m */; };
 		A6EF983CE653BE19E11B4A38A9CFA8E1 /* KMapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2BB8B51E0405467411A942274DF055 /* KMapViewRepresentable.swift */; };
-		D169E47456C83DC8D1F87AA8344A2E26 /* FileMarkerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E66037A4F91B367FD6C619F7752F388 /* FileMarkerData.swift */; };
+		D169E47456C83DC8D1F87AA8344A2E26 /* MarkerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E66037A4F91B367FD6C619F7752F388 /* MarkerData.swift */; };
 		E5AA6D1D66A2EC99A1BA79E4C3149E59 /* Pods-KGoogleMap_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E67A4A83384C4528E028906EEA2D8FA5 /* Pods-KGoogleMap_Tests-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		F3C8DBD9D86F652A689FFB8C003B557A /* Pods-KGoogleMap_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B8BC8C74D3B0ED1053631A90D0FDD6 /* Pods-KGoogleMap_Tests-dummy.m */; };
 		FD6A1183B99AFFCB576363E83DD3FC5A /* KGoogleMap-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A8314CBB56D72A24B8345F3D21D70E1 /* KGoogleMap-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -71,7 +71,7 @@
 		182ACB02BF9910ED3E2DAFEDDD3DD9D3 /* ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist"; sourceTree = "<group>"; };
 		21BC9DE5EE18F27517C52ABD3FBF38ED /* GoogleMaps-GoogleMapsResources */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "GoogleMaps-GoogleMapsResources"; path = GoogleMapsResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		27C7F6BA789A115DB55172BD659C490F /* GoogleMaps.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleMaps.release.xcconfig; sourceTree = "<group>"; };
-		3E66037A4F91B367FD6C619F7752F388 /* FileMarkerData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FileMarkerData.swift; sourceTree = "<group>"; };
+		3E66037A4F91B367FD6C619F7752F388 /* MarkerData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkerData.swift; sourceTree = "<group>"; };
 		41BF2FCF2CA9DDF00036D728 /* KMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KMapView.swift; path = KGoogleMap/Classes/KMapView.swift; sourceTree = "<group>"; };
 		4EFF0310AD3AE548FE03C46CA47D905C /* GMSEmpty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GMSEmpty.h; path = Base/Sources/GMSEmpty.h; sourceTree = "<group>"; };
 		5DC41C71B1188F50D2AAB1B917A4B5F0 /* KGoogleMap-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KGoogleMap-prefix.pch"; sourceTree = "<group>"; };
@@ -162,7 +162,7 @@
 		5C4ED118C86D5655448FC52706D4916A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3E66037A4F91B367FD6C619F7752F388 /* FileMarkerData.swift */,
+				3E66037A4F91B367FD6C619F7752F388 /* MarkerData.swift */,
 			);
 			name = Model;
 			path = KGoogleMap/Classes/Model;
@@ -496,7 +496,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D169E47456C83DC8D1F87AA8344A2E26 /* FileMarkerData.swift in Sources */,
+				D169E47456C83DC8D1F87AA8344A2E26 /* MarkerData.swift in Sources */,
 				5060F7D95BE05252A21A92C22E876DA5 /* KGoogleMap-dummy.m in Sources */,
 				FE330FB47D220C20CC4614FC0B39A2D7 /* KGoogleMapInit.swift in Sources */,
 				41BF2FD02CA9DDF00036D728 /* KMapView.swift in Sources */,
