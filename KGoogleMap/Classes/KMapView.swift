@@ -67,26 +67,30 @@ import GoogleMaps
     }
 
     // Method to set the route between two points
-    @objc public func fetchRoute(start: NSValue?, end: NSValue) {
+    @objc public func fetchRoute(startLat: NSNumber? = nil, startLong: NSNumber? = nil, endLat: NSNumber, endLong: NSNumber) {
         // Print the type of end for debugging
-        print("Type of end: \(type(of: end))")
+        print("End Latitude: \(endLat), End Longitude: \(endLong)")
 
-        // Extract CLLocationCoordinate2D from NSValue for the end coordinate
-        var endCoordinate = CLLocationCoordinate2D()
-        end.getValue(&endCoordinate) // Unwrap the value
+        // Create the end coordinate using the provided latitude and longitude
+        let endCoordinate = CLLocationCoordinate2D(
+            latitude: CLLocationDegrees(truncating: endLat),
+            longitude: CLLocationDegrees(truncating: endLong)
+        )
 
         var startCoordinate: CLLocationCoordinate2D?
 
-        // If start is provided, extract CLLocationCoordinate2D from NSValue
-        if let startValue = start {
-            startValue.getValue(&startCoordinate) // Unwrap the start coordinate
-        }
-
-        // If startCoordinate is nil, get the current user location
-        if startCoordinate == nil {
-            // Access the locationManager property from the mapViewController instance
+        // Check if startLat and startLong are provided
+        if let startLat = startLat, let startLong = startLong {
+            // If provided, create CLLocationCoordinate2D
+            startCoordinate = CLLocationCoordinate2D(
+                latitude: CLLocationDegrees(truncating: startLat),
+                longitude: CLLocationDegrees(truncating: startLong)
+            )
+        } else {
+            // If not provided, get the current user location
             if let currentLocation = mapViewController?.locationManager.location {
                 startCoordinate = currentLocation.coordinate
+                print("Using current location as start coordinate: \(startCoordinate!)")
             } else {
                 print("Current location is not available.")
                 return
@@ -96,8 +100,6 @@ import GoogleMaps
         // Call the fetchRoute method on the map view controller
         mapViewController?.fetchRoute(from: startCoordinate, to: endCoordinate)
     }
-
-
 
 
 
