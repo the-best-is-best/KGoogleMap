@@ -68,15 +68,38 @@ import GoogleMaps
 
     // Method to set the route between two points
     @objc public func fetchRoute(start: NSValue?, end: NSValue) {
-        guard let endCoordinate = end as? CLLocationCoordinate2D else { return }
+        // Print the type of end for debugging
+        print("Type of end: \(type(of: end))")
+
+        // Extract CLLocationCoordinate2D from NSValue for the end coordinate
+        var endCoordinate = CLLocationCoordinate2D()
+        end.getValue(&endCoordinate) // Unwrap the value
+
         var startCoordinate: CLLocationCoordinate2D?
 
+        // If start is provided, extract CLLocationCoordinate2D from NSValue
         if let startValue = start {
-            startCoordinate = startValue as? CLLocationCoordinate2D
+            startValue.getValue(&startCoordinate) // Unwrap the start coordinate
         }
 
+        // If startCoordinate is nil, get the current user location
+        if startCoordinate == nil {
+            // Access the locationManager property from the mapViewController instance
+            if let currentLocation = mapViewController?.locationManager.location {
+                startCoordinate = currentLocation.coordinate
+            } else {
+                print("Current location is not available.")
+                return
+            }
+        }
+
+        // Call the fetchRoute method on the map view controller
         mapViewController?.fetchRoute(from: startCoordinate, to: endCoordinate)
     }
+
+
+
+
 
     // Method to clear all markers
     @objc public func clearMarkers() {

@@ -75,6 +75,7 @@ public class KMapViewRepresentable: UIViewController {
     }
 
     func fetchRoute(from origin: CLLocationCoordinate2D?, to destination: CLLocationCoordinate2D) {
+        print("Fetch Route")
         let originCoordinate: CLLocationCoordinate2D
         if let origin = origin {
             originCoordinate = origin
