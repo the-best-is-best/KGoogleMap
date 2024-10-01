@@ -42,7 +42,7 @@ public class KMapViewRepresentable: UIViewController {
     }
 
     // Setup location manager
-    private func setupLocationManager() {
+     func setupLocationManager() {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()

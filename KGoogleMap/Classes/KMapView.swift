@@ -103,6 +103,7 @@ import GoogleMaps
     @objc public func clearMarkers() {
         mapViewController?.markers.removeAll()
         mapViewController?.mapView?.clear()
+        mapViewController?.setupLocationManager()
     }
 
     // Method to zoom to a specific location with a zoom level
