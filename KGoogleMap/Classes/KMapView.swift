@@ -2,7 +2,6 @@
 // KGoogleMap
 //
 // Created by Michelle Raouf on 29/09/2024.
-//
 import SwiftUI
 import GoogleMaps
 
@@ -62,7 +61,7 @@ import GoogleMaps
     // Method to update markers dynamically
     @objc public func updateMarkers(_ markers: [MarkerData]) {
         mapViewController?.markers = markers
-        mapViewController?.addMarkers(to: mapViewController?.mapView)
+        mapViewController?.addMarkers(to: mapViewController!.mapView!)
     }
 
     // Method to set the route between two points
@@ -144,5 +143,10 @@ import GoogleMaps
             mapViewController?.locationManager.stopUpdatingLocation()
             mapViewController?.currentLocationMarker?.map = nil
         }
+    }
+
+    // Method to show or hide the route
+    @objc public func setRouteVisibility(_ visible: Bool) {
+        mapViewController?.setRouteVisibility(visible)
     }
 }
