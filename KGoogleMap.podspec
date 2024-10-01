@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'KGoogleMap'
-  s.version          = '0.1.0-beta.17'  # Use rc or beta versioning as needed
+  s.version          = '0.1.0-beta.18'  # Use rc or beta versioning as needed
   s.summary          = 'A library for integrating Google Maps with CocoaPods Kotlin Multiplatform'
   s.description      = 'KGoogleMap is a support controller for Google Maps to use it with Kotlin Multiplatform.'
 
