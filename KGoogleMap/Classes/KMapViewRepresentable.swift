@@ -9,13 +9,13 @@ public class KMapViewRepresentable: UIViewController {
     var mapView: GMSMapView!
     var camera: GMSCameraPosition?
     var markers: [MarkerData] = []
-    var currentLocationMarker: GMSMarker?
     var showCurrentLocation: Bool = false
     var locationManager = CLLocationManager()
 
     // New property to manage route visibility
     private var routePolyline: GMSPolyline?
     var isRouteVisible: Bool = false
+    private var currentCircleOverlay: GMSCircle? = nil
 
     // Initialization method
     init(camera: GMSCameraPosition?, markers: [MarkerData]?, showCurrentLocation: Bool) {
@@ -75,18 +75,36 @@ public class KMapViewRepresentable: UIViewController {
     // Method to add a marker for the user's current location
     private func addCurrentLocationMarker() {
         guard let location = locationManager.location else { return }
-
+        
         let currentLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
 
-        // Create a circular overlay to indicate the user's location
-        let circleOverlay = GMSCircle(position: currentLocation, radius: 40)
-        circleOverlay.fillColor = UIColor.blue.withAlphaComponent(0.5)
-        circleOverlay.strokeColor = UIColor.blue
-        circleOverlay.strokeWidth = 2
-        circleOverlay.map = mapView
+        // Clear the existing marker before adding a new one
+        if currentCircleOverlay != nil {
+            currentCircleOverlay?.map = nil // Remove existing overlay from map
+        }
 
-  
+        // Create a new circular overlay to indicate the user's location
+        currentCircleOverlay = GMSCircle(position: currentLocation, radius: 40)
+        currentCircleOverlay!.fillColor = UIColor.blue.withAlphaComponent(0.5)
+        currentCircleOverlay!.strokeColor = UIColor.blue
+        currentCircleOverlay!.strokeWidth = 2
+        currentCircleOverlay!.map = mapView
     }
+
+    
+    private func clearCurrentLocationMarker() {
+        if let currentCircleOverlay = currentCircleOverlay {
+            print("Clearing current location marker.")
+            currentCircleOverlay.map = nil // Remove the circle overlay from the map
+            self.currentCircleOverlay = nil // Set the reference to nil
+            mapView.clear()
+            print("Current location marker cleared.")
+        } else {
+            print("No current location marker to clear.")
+        }
+    }
+
+
 
     // Method to fetch route between two coordinates
     func fetchRoute(from origin: CLLocationCoordinate2D?, to destination: CLLocationCoordinate2D) {
@@ -141,6 +159,8 @@ public class KMapViewRepresentable: UIViewController {
     func showUserLocation(){
         if showCurrentLocation {
             addCurrentLocationMarker() // Call the new method to add the current location marker
+        } else {
+            clearCurrentLocationMarker()
         }
     }
 }
@@ -150,11 +170,13 @@ extension KMapViewRepresentable: CLLocationManagerDelegate {
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         let coordinate = location.coordinate
+
+        // Print the updated location
+        print("Updated location: \(coordinate.latitude), \(coordinate.longitude)")
         
         // Update the current location marker
         mapView.animate(toLocation: coordinate)
-        if showCurrentLocation {
-            addCurrentLocationMarker() // Call the new method to add the current location marker
-        }
+        showUserLocation() // Call showUserLocation to update marker
     }
+
 }

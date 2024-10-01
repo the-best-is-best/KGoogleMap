@@ -137,7 +137,9 @@ import GoogleMaps
 
     // Method to show or hide the user's current location
     @objc public func showUserLocation(_ show: Bool) {
-        clearMarkers()
+        mapViewController?.showCurrentLocation = show
+        mapViewController?.showUserLocation()
+
     }
 
     // Method to show or hide the route
