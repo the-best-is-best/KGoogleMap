@@ -44,9 +44,18 @@ public class KMapViewRepresentable: UIViewController {
         }
     }
 
+    // Method to add markers to the map view
     func addMarkers(to mapView: GMSMapView?) {
+        // If markers list is empty, log a message and return
+        guard !markers.isEmpty else {
+            print("No markers to add.")
+            return
+        }
+
+        // Clear existing markers on the map
         mapView?.clear()
 
+        // Add new markers to the map
         for markerData in markers {
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: markerData.latitude, longitude: markerData.longitude)
@@ -54,9 +63,8 @@ public class KMapViewRepresentable: UIViewController {
             marker.snippet = markerData.snippet
             marker.map = mapView
         }
-
-    
     }
+
 
     private func addCurrentLocationMarker() {
         guard let location = locationManager.location else { return }

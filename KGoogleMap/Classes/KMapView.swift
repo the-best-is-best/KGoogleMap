@@ -6,18 +6,17 @@
 import SwiftUI
 import GoogleMaps
 
-
 // MARK: - KMapView Wrapper
 @objc public class KMapView: UIView {
     private var mapViewController: KMapViewRepresentable?
 
     // Initialization method with camera, markers, and showCurrentLocation option
     @objc public init(camera: GMSCameraPosition? = nil,
-                     markers: [MarkerData] = [],
+                     markers: [MarkerData]? = nil, // Allow markers to be nil
                      showCurrentLocation: Bool = false) {
         super.init(frame: .zero)
         setupMapView(camera: camera,
-                     markers: markers,
+                     markers: markers ?? [], // Provide an empty array if markers is nil
                      showCurrentLocation: showCurrentLocation)
     }
 
@@ -101,8 +100,6 @@ import GoogleMaps
         mapViewController?.fetchRoute(from: startCoordinate, to: endCoordinate)
     }
 
-
-
     // Method to clear all markers
     @objc public func clearMarkers() {
         mapViewController?.markers.removeAll()
@@ -115,10 +112,20 @@ import GoogleMaps
         mapViewController?.mapView?.animate(with: cameraUpdate)
     }
 
-    // Method to reset the camera to its initial position
+    // Method to reset the camera to its initial position or current location
     @objc public func resetCameraPosition() {
         if let initialCamera = mapViewController?.camera {
             mapViewController?.mapView?.animate(to: initialCamera)
+        } else {
+            // If initialCamera is nil, use the current location if available
+            if let currentLocation = mapViewController?.locationManager.location {
+                let currentCoordinate = currentLocation.coordinate
+                let cameraUpdate = GMSCameraUpdate.setTarget(currentCoordinate, zoom: 15.0) // You can adjust the zoom level as needed
+                mapViewController?.mapView?.animate(with: cameraUpdate)
+                print("Resetting camera to current location: \(currentCoordinate)")
+            } else {
+                print("Current location is not available to reset camera position.")
+            }
         }
     }
 
