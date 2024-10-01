@@ -65,38 +65,8 @@ import GoogleMaps
     }
 
     // Method to set the route between two points
-    @objc public func fetchRoute(startLat: NSNumber? = nil, startLong: NSNumber? = nil, endLat: NSNumber, endLong: NSNumber) {
-        // Print the type of end for debugging
-        print("End Latitude: \(endLat), End Longitude: \(endLong)")
-
-        // Create the end coordinate using the provided latitude and longitude
-        let endCoordinate = CLLocationCoordinate2D(
-            latitude: CLLocationDegrees(truncating: endLat),
-            longitude: CLLocationDegrees(truncating: endLong)
-        )
-
-        var startCoordinate: CLLocationCoordinate2D?
-
-        // Check if startLat and startLong are provided
-        if let startLat = startLat, let startLong = startLong {
-            // If provided, create CLLocationCoordinate2D
-            startCoordinate = CLLocationCoordinate2D(
-                latitude: CLLocationDegrees(truncating: startLat),
-                longitude: CLLocationDegrees(truncating: startLong)
-            )
-        } else {
-            // If not provided, get the current user location
-            if let currentLocation = mapViewController?.locationManager.location {
-                startCoordinate = currentLocation.coordinate
-                print("Using current location as start coordinate: \(startCoordinate!)")
-            } else {
-                print("Current location is not available.")
-                return
-            }
-        }
-
-        // Call the fetchRoute method on the map view controller
-        mapViewController?.fetchRoute(from: startCoordinate, to: endCoordinate)
+    @objc public func renderRoad(_ points: String) {
+        mapViewController?.renderRoad(points)
     }
 
     // Method to clear all markers
