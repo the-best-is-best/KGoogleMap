@@ -103,7 +103,8 @@ import GoogleMaps
     @objc public func clearMarkers() {
         mapViewController?.markers.removeAll()
         mapViewController?.mapView?.clear()
-        mapViewController?.setupLocationManager()
+        mapViewController?.showUserLocation()
+        
     }
 
     // Method to zoom to a specific location with a zoom level
@@ -136,14 +137,7 @@ import GoogleMaps
 
     // Method to show or hide the user's current location
     @objc public func showUserLocation(_ show: Bool) {
-        mapViewController?.showCurrentLocation = show
-        if show {
-            mapViewController?.locationManager.delegate = mapViewController // Set delegate
-            mapViewController?.locationManager.startUpdatingLocation()
-        } else {
-            mapViewController?.locationManager.stopUpdatingLocation()
-            mapViewController?.currentLocationMarker?.map = nil
-        }
+        clearMarkers()
     }
 
     // Method to show or hide the route

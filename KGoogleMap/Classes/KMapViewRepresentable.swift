@@ -42,7 +42,7 @@ public class KMapViewRepresentable: UIViewController {
     }
 
     // Setup location manager
-     func setupLocationManager() {
+   private  func setupLocationManager() {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
@@ -79,7 +79,7 @@ public class KMapViewRepresentable: UIViewController {
         let currentLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
 
         // Create a circular overlay to indicate the user's location
-        let circleOverlay = GMSCircle(position: currentLocation, radius: 20)
+        let circleOverlay = GMSCircle(position: currentLocation, radius: 40)
         circleOverlay.fillColor = UIColor.blue.withAlphaComponent(0.5)
         circleOverlay.strokeColor = UIColor.blue
         circleOverlay.strokeWidth = 2
@@ -92,7 +92,7 @@ public class KMapViewRepresentable: UIViewController {
     func fetchRoute(from origin: CLLocationCoordinate2D?, to destination: CLLocationCoordinate2D) {
         // Your logic for fetching route goes here
         // For demo purposes, we will use a static URL for directions API (make sure to replace it with actual implementation)
-        let url = URL(string: "YOUR_GOOGLE_DIRECTIONS_API_URL")!
+        let url = URL(string: KGoogleMapInit.apiKey!)!
 
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data, error == nil else {
@@ -136,6 +136,12 @@ public class KMapViewRepresentable: UIViewController {
     func setRouteVisibility(_ visible: Bool) {
         isRouteVisible = visible
         routePolyline?.map = visible ? mapView : nil // Show or hide the polyline based on visibility
+    }
+    
+    func showUserLocation(){
+        if showCurrentLocation {
+            addCurrentLocationMarker() // Call the new method to add the current location marker
+        }
     }
 }
 
