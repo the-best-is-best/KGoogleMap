@@ -108,23 +108,47 @@ public class KMapViewRepresentable: UIViewController {
 
     // Method to fetch route between two coordinates
     func fetchRoute(from origin: CLLocationCoordinate2D?, to destination: CLLocationCoordinate2D) {
-        // Your logic for fetching route goes here
-        // For demo purposes, we will use a static URL for directions API (make sure to replace it with actual implementation)
-        let url = URL(string: KGoogleMapInit.apiKey!)!
+        print("Fetching route...")
+
+        let originCoordinate: CLLocationCoordinate2D
+        if let origin = origin {
+            originCoordinate = origin
+        } else if let currentLocation = currentCircleOverlay?.position {
+            originCoordinate = currentLocation
+        } else {
+            print("No valid origin provided and current location is not available.")
+            return
+        }
+
+        guard let apiKey = KGoogleMapInit.apiKey, !apiKey.isEmpty else {
+            print("API Key is missing.")
+            return
+        }
+        
+        let originString = "\(originCoordinate.latitude),\(originCoordinate.longitude)"
+        let destinationString = "\(destination.latitude),\(destination.longitude)"
+        let urlString = "https://maps.googleapis.com/maps/api/directions/json?origin=\(originString)&destination=\(destinationString)&key=\(apiKey)"
+        
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL: \(urlString)")
+            return
+        }
 
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data, error == nil else {
-                print("Error fetching route: \(error?.localizedDescription ?? "Unknown error")")
+                print("Error fetching directions: \(String(describing: error))")
                 return
             }
 
             do {
-                // Parse the data to get the polyline
                 if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                    let routes = json["routes"] as? [[String: Any]],
                    let overviewPolyline = routes.first?["overview_polyline"] as? [String: Any],
                    let points = overviewPolyline["points"] as? String {
                     self.drawRoute(from: points)
+                    print("Route successfully fetched and drawn.")
+                } else {
+                    print("No routes found in response.")
                 }
             } catch {
                 print("Error parsing JSON: \(error)")
