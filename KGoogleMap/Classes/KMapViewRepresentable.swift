@@ -85,15 +85,7 @@ public class KMapViewRepresentable: UIViewController {
         circleOverlay.strokeWidth = 2
         circleOverlay.map = mapView
 
-        // Update or create the current location marker
-        if currentLocationMarker == nil {
-            currentLocationMarker = GMSMarker(position: currentLocation)
-            currentLocationMarker?.title = "You are here"
-            currentLocationMarker?.map = mapView
-        } else {
-            currentLocationMarker?.position = currentLocation // Update position of the existing marker
-            currentLocationMarker?.map = mapView // Ensure it's added to the map
-        }
+  
     }
 
     // Method to fetch route between two coordinates
