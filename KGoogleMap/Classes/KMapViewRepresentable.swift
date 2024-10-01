@@ -14,7 +14,7 @@ public class KMapViewRepresentable: UIViewController {
 
     // New property to manage route visibility
     private var routePolyline: GMSPolyline?
-    var isRouteVisible: Bool = false
+    var isRouteVisible: Bool = true
     private var currentCircleOverlay: GMSCircle? = nil
 
     // Initialization method
@@ -42,7 +42,7 @@ public class KMapViewRepresentable: UIViewController {
     }
 
     // Setup location manager
-   private  func setupLocationManager() {
+    private func setupLocationManager() {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
@@ -89,9 +89,12 @@ public class KMapViewRepresentable: UIViewController {
         currentCircleOverlay!.strokeColor = UIColor.blue
         currentCircleOverlay!.strokeWidth = 2
         currentCircleOverlay!.map = mapView
+
+        // Update the camera position to the user's current location
+        let camera = GMSCameraPosition.camera(withLatitude: currentLocation.latitude, longitude: currentLocation.longitude, zoom: 15)
+        mapView.animate(to: camera) // Animate to the current location
     }
 
-    
     private func clearCurrentLocationMarker() {
         if let currentCircleOverlay = currentCircleOverlay {
             print("Clearing current location marker.")
@@ -103,8 +106,6 @@ public class KMapViewRepresentable: UIViewController {
             print("No current location marker to clear.")
         }
     }
-
-
 
     // Method to fetch route between two coordinates
     func renderRoad(_ points: String) {
@@ -121,7 +122,6 @@ public class KMapViewRepresentable: UIViewController {
             routePolyline?.map = mapView // Show the polyline on the map
         }
     }
-
 
     // Method to set route visibility
     func setRouteVisibility(_ visible: Bool) {
@@ -146,10 +146,8 @@ extension KMapViewRepresentable: CLLocationManagerDelegate {
 
         // Print the updated location
         print("Updated location: \(coordinate.latitude), \(coordinate.longitude)")
-        
+
         // Update the current location marker
-        mapView.animate(toLocation: coordinate)
         showUserLocation() // Call showUserLocation to update marker
     }
-
 }
