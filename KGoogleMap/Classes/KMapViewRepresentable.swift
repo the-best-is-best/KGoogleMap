@@ -110,32 +110,40 @@ public class KMapViewRepresentable: UIViewController {
     // Method to fetch route between two coordinates
     func renderRoad(_ points: String) {
         // Create GMSPath from encoded path
-        guard let path = GMSPath(fromEncodedPath: points) else {
-            print("Failed to create GMSPath from encoded path")
-            return
-        }
+        guard let coordinates = decodePolyline(points) else {
+                print("Failed to create GMSPath from encoded path")
+                return
+            }
 
-        // If routePolyline already exists, remove it from the map
-        routePolyline?.map = nil
+            // Remove the old polyline if it exists
+            routePolyline?.map = nil
 
-        // Create a new polyline with the new path
-        routePolyline = GMSPolyline(path: path)
-        routePolyline?.strokeColor = .blue // Change color for visibility
-        routePolyline?.strokeWidth = 10.0   // Increase width for visibility
+            // Create a new path from the decoded coordinates
+            let path = GMSMutablePath()
+            coordinates.forEach { path.add($0) }
 
-        // Log coordinates for debugging
-        for index in 0..<path.count() {
-            let coordinate = path.coordinate(at: index)
-            print("Coordinate \(index): \(coordinate.latitude), \(coordinate.longitude)")
-        }
+            // Create a new polyline with the new path
+            routePolyline = GMSPolyline(path: path)
+            routePolyline?.strokeColor = .blue // Change color for visibility
+            routePolyline?.strokeWidth = 10.0  // Increase width for visibility
 
-        // Check and print visibility status
-        print("isRouteVisible before rendering: \(isRouteVisible)")
+            // Log coordinates for debugging
+            coordinates.enumerated().forEach { index, coordinate in
+                print("Coordinate \(index): \(coordinate.latitude), \(coordinate.longitude)")
+            }
 
-        if isRouteVisible {
-            routePolyline?.map = mapView // Show the polyline on the map
-            print("Polyline rendered on the map")
-        }
+            // Check and print visibility status
+            print("isRouteVisible before rendering: \(isRouteVisible)")
+
+            // If the route should be visible, add it to the map
+            if isRouteVisible {
+                routePolyline?.map = mapView
+                print("Polyline rendered on the map")
+            }
+    }
+    
+    private func decodePolyline(_ encoded: String) -> [CLLocationCoordinate2D]? {
+        return GMSPath(fromEncodedPath: encoded)?.coordinates()
     }
 
     // Method to set route visibility

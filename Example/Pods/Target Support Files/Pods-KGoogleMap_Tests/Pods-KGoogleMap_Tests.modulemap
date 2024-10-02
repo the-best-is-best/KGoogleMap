@@ -1,6 +1,0 @@
-module Pods_KGoogleMap_Tests {
-  umbrella header "Pods-KGoogleMap_Tests-umbrella.h"
-
-  export *
-  module * { export * }
-}
