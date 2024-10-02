@@ -118,6 +118,8 @@ public class KMapViewRepresentable: UIViewController {
         routePolyline = GMSPolyline(path: path)
         routePolyline?.strokeColor = .red
         routePolyline?.strokeWidth = 5.0
+        print("path \(String(describing: path))")
+        print("isRouteVisible \(isRouteVisible)")
         if isRouteVisible {
             routePolyline?.map = mapView // Show the polyline on the map
         }
