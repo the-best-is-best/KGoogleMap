@@ -26,3 +26,7 @@ Michelle Raouf, <michelle.raouf@outlook.com>
 ## License
 
 KGoogleMap is available under the MIT license. See the LICENSE file for more info.
+
+## Note
+
+This package create for use it in kotlin multi-platform
