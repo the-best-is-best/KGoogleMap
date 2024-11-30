@@ -4,6 +4,7 @@
 // Created by Michelle Raouf on 29/09/2024.
 import SwiftUI
 import GoogleMaps
+import UIKit
 
 @objc public class KMapView: UIView {
     private var mapViewController: KMapViewRepresentable?
@@ -101,7 +102,40 @@ import GoogleMaps
     }
 
     // Method to retrieve the current location data
-    @objc public func searchAddress(searchString: String) async -> LocationData? {
-        return await mapViewController?.searchAddress(searchString: searchString)
+    @objc public func showSearch() {
+        mapViewController?.openPlaceSearch()
     }
+    
+    @objc public func setListenerSelectedLocation(listener: @escaping (LocationData) -> Void) {
+        mapViewController?.didSelectLocation = listener
+       }
+    
 }
+
+
+func getCurrentViewController() -> UIViewController? {
+    guard let keyWindow = UIApplication.shared.connectedScenes
+        .filter({ $0.activationState == .foregroundActive })
+        .compactMap({ $0 as? UIWindowScene })
+        .first?.windows
+        .first(where: { $0.isKeyWindow }) else {
+        return nil
+    }
+    
+    var topController = keyWindow.rootViewController
+    
+    while let presentedController = topController?.presentedViewController {
+        topController = presentedController
+    }
+    
+    if let navigationController = topController as? UINavigationController {
+        topController = navigationController.visibleViewController
+    }
+    
+    if let tabBarController = topController as? UITabBarController {
+        topController = tabBarController.selectedViewController
+    }
+    
+    return topController
+}
+

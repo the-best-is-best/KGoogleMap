@@ -10,7 +10,6 @@ import KGoogleMap
 import GoogleMaps
 
 struct ContentView: View {
-    // Create a state variable to store the KMapViewWrapper instance
 
     var body: some View {
         VStack {
@@ -27,13 +26,10 @@ struct ContentView: View {
 
             Button(action: {
                 // Safely unwrap and call getCurrentLocationData
-                Task {
-                    if let locationData = await KMapViewWrapper.Coordinator(mapView: KMapView()).searchAddress(query: "St Teresa Catholic Church") {
-                        print("Current location data: \(locationData.name)")
-                    } else {
-                        print("Failed to get current location data.")
-                    }
-                }
+                if let coordinator = KMapViewWrapper.Coordinator.shared {
+                                   coordinator.showSearch()
+                               }
+                
             }) {
                 Text("Get Current Location")
                     .padding()
@@ -58,14 +54,26 @@ struct KMapViewWrapper: UIViewRepresentable {
     var showCurrentLocation: Bool
 
     class Coordinator {
+        static var shared: Coordinator?
+
         var mapView: KMapView?
-        
+
         init(mapView: KMapView?) {
             self.mapView = mapView
+            Coordinator.shared = self
+        }
+
+        func showSearch() {
+            guard let mapView = mapView else { return }
+                
+            mapView.showSearch()
+            
         }
         
-        func searchAddress(query: String)  async -> LocationData? {
-            return  await mapView?.searchAddress(searchString: query)
+        func setListnerAddress(listener: @escaping (LocationData) -> Void){
+            mapView?.setListenerSelectedLocation { v in
+                listener(v)
+            }
         }
     }
 
@@ -74,14 +82,14 @@ struct KMapViewWrapper: UIViewRepresentable {
         context.coordinator.mapView = mapView
         return mapView
     }
-    
+
     func updateUIView(_ uiView: KMapView, context: Context) {
         // Update the view with new data if necessary.
         if let updatedMarkers = markers {
             uiView.updateMarkers(updatedMarkers)
         }
     }
-    
+
     func makeCoordinator() -> Coordinator {
         return Coordinator(mapView: nil)
     }

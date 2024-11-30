@@ -25,8 +25,9 @@ Pod::Spec.new do |s|
   s.source_files = 'KGoogleMap/Classes/**/*'
 
   # Specify the dependencies
-  s.dependency 'GoogleMaps', '9.1.1.0'  # Google Maps SDK for iOS
+  s.dependency 'GoogleMaps', '9.2.0'  # Google Maps SDK for iOS
   s.dependency 'Google-Maps-iOS-Utils' , '6.0.0'
+  s.dependency 'GooglePlaces' , '9.2.0'
 
 
   s.static_framework = true

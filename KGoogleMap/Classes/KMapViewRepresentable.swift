@@ -3,10 +3,10 @@
 //
 // Created by Michelle Raouf on 29/09/2024.
 import UIKit
+import GooglePlaces
 import GoogleMaps
-import CoreLocation
 
-public class KMapViewRepresentable: UIViewController {
+public class KMapViewRepresentable: UIViewController, GMSAutocompleteViewControllerDelegate {
     var mapView: GMSMapView!
     var camera: GMSCameraPosition?
     var markers: [MarkerData] = []
@@ -16,6 +16,9 @@ public class KMapViewRepresentable: UIViewController {
     private var routePolyline: GMSPolyline?
     var isRouteVisible: Bool = true
     private var currentCircleOverlay: GMSCircle? = nil
+    
+    public var didSelectLocation: ((LocationData) -> Void)?
+
 
     // Initialization method
     init(camera: GMSCameraPosition?, markers: [MarkerData]?, showCurrentLocation: Bool) {
@@ -141,47 +144,69 @@ public class KMapViewRepresentable: UIViewController {
         }
     }
 
-    func searchAddress(searchString: String) async -> LocationData? {
-        let geocoder = CLGeocoder()
-        var locationData: LocationData?
+    
+    public override func viewDidLoad() {
+           super.viewDidLoad()
+           setupUI()
+       }
 
-        // Create a CLLocation instance from the search string (assuming it's an address)
-        // This step requires some way to resolve a string to a coordinate, like a forward geocoding call.
-        do {
-            // Assuming searchString is an address or location name, use forward geocoding first
-            let location = try await geocoder.geocodeAddressString(searchString)
-            
-            guard let placemark = location.first else {
-                print("No placemark found.")
-                return nil
-            }
+       // Set up your custom UI (e.g., buttons, labels)
+       private func setupUI() {
+           // Example: Adding a button to trigger the search
+           let searchButton = UIButton(type: .system)
+           searchButton.setTitle("Search Places", for: .normal)
+           searchButton.addTarget(self, action: #selector(openPlaceSearch), for: .touchUpInside)
+           searchButton.translatesAutoresizingMaskIntoConstraints = false
+           view.addSubview(searchButton)
 
-            print("Placemark details: \(placemark)")
+           // Set up constraints for your button (or other UI components)
+           NSLayoutConstraint.activate([
+               searchButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+               searchButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+           ])
+       }
 
-            // Extract relevant information from the placemark
-            let streetName = placemark.thoroughfare?.trimmingCharacters(in: .whitespaces).lowercased() ?? ""
-            let locality = placemark.locality?.trimmingCharacters(in: .whitespaces).lowercased() ?? ""
-            let subThoroughfare = placemark.subThoroughfare?.trimmingCharacters(in: .whitespaces).lowercased() ?? ""
-            let postalCode = placemark.postalCode?.trimmingCharacters(in: .whitespaces).lowercased() ?? ""
-            let administrativeArea = placemark.administrativeArea?.trimmingCharacters(in: .whitespaces).lowercased() ?? ""
+       @objc public func openPlaceSearch() {
+           // Initialize and set up the GMSAutocompleteViewController
+           let autocompleteController = GMSAutocompleteViewController()
+           autocompleteController.delegate = self
 
-            print("Street Name: \(streetName)")
-            print("Locality: \(locality)")
-            print("SubThoroughfare: \(subThoroughfare)")
-            print("Postal Code: \(postalCode)")
-            print("Administrative Area: \(administrativeArea)")
+           // Customize the autocomplete filter
+           let filter = GMSAutocompleteFilter()
+           filter.types = ["*"] // Adjust type filters as needed
+           autocompleteController.autocompleteFilter = filter
 
-            // Check if any of the placemark details match the search string (custom matching logic)
-       
-                // Create and return a LocationData instance here as needed
-                locationData = LocationData(name: streetName, latitude: placemark.location!.altitude, longitude: placemark.location!.altitude)
+           // Present the autocomplete view controller
+           present(autocompleteController, animated: true, completion: nil)
+       }
+
+       // MARK: - GMSAutocompleteViewControllerDelegate Methods
+
+       public func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+           // Handle the place selection
+           let locationData = LocationData(
+               name: place.name,
+               latitude: place.coordinate.latitude,
+               longitude: place.coordinate.longitude
+           )
            
-        } catch {
-            print("Error during geocoding: \(error)")
-        }
+           didSelectLocation?(locationData)
 
-        return locationData
-    }
+
+           // Dismiss the autocomplete controller
+           viewController.dismiss(animated: true, completion: nil)
+       }
+
+       public func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+           print("Autocomplete error: \(error.localizedDescription)")
+           viewController.dismiss(animated: true, completion: nil)
+       }
+
+       public func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+           print("Autocomplete was cancelled.")
+           viewController.dismiss(animated: true, completion: nil)
+       }
+    
 
 }
 

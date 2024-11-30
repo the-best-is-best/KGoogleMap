@@ -7,11 +7,13 @@
 
 import Foundation
 import GoogleMaps
+import GooglePlaces
 
 @objc  public class KGoogleMapInit: NSObject {
    static var apiKey:String? = nil
     @objc public static func provideAPIKey(key: String) {
         apiKey = key
         GMSServices.provideAPIKey(key)
+        GMSPlacesClient.provideAPIKey(key)
     }
 }
