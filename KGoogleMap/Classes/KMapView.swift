@@ -9,11 +9,11 @@ import UIKit
 @objc public class KMapView: UIView {
     private var mapViewController: KMapViewRepresentable?
 
-    @objc public init(camera: GMSCameraPosition? = nil,
+    @objc public init(zoom: Float = 15,
                      markers: [MarkerData]? = nil, // Allow markers to be nil
                       showCurrentLocation: Bool = false) {
         super.init(frame: .zero)
-        setupMapView(camera: camera,
+        setupMapView(zoom: zoom,
                      markers: markers ?? [], // Provide an empty array if markers is nil
                      showCurrentLocation: showCurrentLocation)
     }
@@ -22,11 +22,11 @@ import UIKit
         super.init(coder: coder)
     }
 
-    private func setupMapView(camera: GMSCameraPosition?,
+    private func setupMapView(zoom: Float,
                               markers: [MarkerData],
                               showCurrentLocation: Bool) {
         
-        mapViewController = KMapViewRepresentable(camera: camera,
+        mapViewController = KMapViewRepresentable(zoom: zoom,
                                                   markers: markers,
                                                   showCurrentLocation: showCurrentLocation)
         
@@ -71,22 +71,23 @@ import UIKit
     @objc public func zoomToLocation(_ location: CLLocationCoordinate2D, zoom: Float = 15.0) {
         let cameraUpdate = GMSCameraUpdate.setTarget(location, zoom: zoom)
         mapViewController?.mapView?.animate(with: cameraUpdate)
+        
     }
 
-    @objc public func resetCameraPosition() {
-        if let initialCamera = mapViewController?.camera {
-            mapViewController?.mapView?.animate(to: initialCamera)
-        } else {
-            if let currentLocation = mapViewController?.locationManager.location {
-                let currentCoordinate = currentLocation.coordinate
-                let cameraUpdate = GMSCameraUpdate.setTarget(currentCoordinate, zoom: 15.0)
-                mapViewController?.mapView?.animate(with: cameraUpdate)
-                print("Resetting camera to current location: \(currentCoordinate)")
-            } else {
-                print("Current location is not available to reset camera position.")
-            }
-        }
-    }
+//    @objc public func resetCameraPosition() {
+//        if let initialCamera = mapViewController?.camera {
+//            mapViewController?.mapView?.animate(to: initialCamera)
+//        } else {
+//            if let currentLocation = mapViewController?.locationManager.location {
+//                let currentCoordinate = currentLocation.coordinate
+//                let cameraUpdate = GMSCameraUpdate.setTarget(currentCoordinate, zoom: 15.0)
+//                mapViewController?.mapView?.animate(with: cameraUpdate)
+//                print("Resetting camera to current location: \(currentCoordinate)")
+//            } else {
+//                print("Current location is not available to reset camera position.")
+//            }
+//        }
+//    }
 
     @objc public func setCameraPosition(_ cameraPosition: GMSCameraPosition) {
         mapViewController?.mapView?.camera = cameraPosition
