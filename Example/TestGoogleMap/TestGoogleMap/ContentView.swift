@@ -8,32 +8,43 @@
 import SwiftUI
 import KGoogleMap
 import GoogleMaps
+import CoreLocation
 
 struct ContentView: View {
+//
+//    @State private var locationListener: LocationListener
+//
+//       init() {
+//           // Initialize the LocationListener
+//           _locationListener = State(initialValue: LocationListener())
+//
+//           // Set the location update handler in the init
+//           locationListener.setLocationUpdateHandler { newLocation in
+//               print("New location received: \(newLocation.coordinate.latitude), \(newLocation.coordinate.longitude)")
+//           }
+//           
+//           // Confirm the location listener is set up correctly
+//           print("LocationListener initialized.")
+//       }
 
     var body: some View {
         VStack {
             Text("Google Maps in SwiftUI")
                 .font(.title)
-            
+
             // Initialize and display the KMapViewWrapper
-           KMapViewWrapper(camera: GMSCameraPosition.camera(withLatitude: 30.08167, longitude: 31.248462, zoom: 15),
+            KMapViewWrapper(
                             markers: [],
                             showCurrentLocation: true)
-            .frame(height: 300)
-            .edgesIgnoringSafeArea(.all)
-            
+                .frame(height: 300)
+                .edgesIgnoringSafeArea(.all)
 
             Button(action: {
-                // Safely unwrap and call getCurrentLocationData
-                if let coordinator = KMapViewWrapper.Coordinator.shared {
-                                   coordinator.showSearch()
-                               }
-                
+                // Optional action when button is clicked
+                print("Button clicked")
             }) {
                 Text("Get Current Location")
                     .padding()
-                    .background(Color.blue)
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(8)
@@ -47,9 +58,7 @@ struct ContentView: View {
     ContentView()
 }
 
-
 struct KMapViewWrapper: UIViewRepresentable {
-    var camera: GMSCameraPosition?
     var markers: [MarkerData]?
     var showCurrentLocation: Bool
 
@@ -78,7 +87,7 @@ struct KMapViewWrapper: UIViewRepresentable {
     }
 
     func makeUIView(context: Context) -> KMapView {
-        let mapView = KMapView(camera: camera, markers: markers, showCurrentLocation: showCurrentLocation)
+        let mapView = KMapView(markers: markers, showCurrentLocation: showCurrentLocation)
         context.coordinator.mapView = mapView
         return mapView
     }
