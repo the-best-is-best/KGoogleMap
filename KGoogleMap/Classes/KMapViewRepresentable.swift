@@ -29,13 +29,17 @@ public class KMapViewRepresentable: UIViewController, GMSMapViewDelegate, GMSAut
     
     private var currentUserLocation: CLLocation? = nil
     private var isMoveCameraToCurrentUserLocation = false
+    
+    
+    public var onMapLoaded: (() -> Void)?
 
     // Initialization method
-    init(zoom: Float?, markers: [MarkerData]?, showCurrentLocation: Bool) {
+    init(zoom: Float?, markers: [MarkerData]?, showCurrentLocation: Bool, onMapLoaded: (() -> Void)? = nil) {
         self.zoom = zoom
         self.markers = markers ?? [] // Use an empty array if markers is nil
         self.showCurrentLocation = showCurrentLocation
         self._locationListener = State(initialValue: LocationListener())
+        self.onMapLoaded = onMapLoaded
         super.init(nibName: nil, bundle: nil)
         setupMapView()
         
@@ -72,6 +76,7 @@ public class KMapViewRepresentable: UIViewController, GMSMapViewDelegate, GMSAut
                       }
                   }
               }
+        
     }
     // Handle single tap (onMapClick)
         public func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
@@ -238,6 +243,11 @@ public class KMapViewRepresentable: UIViewController, GMSMapViewDelegate, GMSAut
         print("Autocomplete was cancelled.")
         viewController.dismiss(animated: true, completion: nil)
     }
+    
+    public func mapViewDidFinishTileRendering(_ mapView: GMSMapView) {
+           // Trigger the onMapLoaded callback when the map finishes loading
+           onMapLoaded?()
+       }
 }
 
 // MARK: - CLLocationManagerDelegate
@@ -255,4 +265,6 @@ extension KMapViewRepresentable: CLLocationManagerDelegate {
     public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Failed to get user location: \(error.localizedDescription)")
     }
+    
+  
 }

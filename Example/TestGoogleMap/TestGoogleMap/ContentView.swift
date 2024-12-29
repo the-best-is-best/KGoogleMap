@@ -55,6 +55,7 @@ struct KMapViewWrapper: UIViewRepresentable {
 
         init(mapView: KMapView?) {
               self.mapView = mapView
+            
               Coordinator.shared = self
               // Set up listeners only when mapView is fully initialized
                   mapView?.setClickListener(listener: { locationData in
@@ -81,7 +82,9 @@ struct KMapViewWrapper: UIViewRepresentable {
     }
 
     func makeUIView(context: Context) -> KMapView {
-        let mapView = KMapView(markers: markers, showCurrentLocation: showCurrentLocation)
+        let mapView = KMapView(markers: markers, showCurrentLocation: showCurrentLocation) {
+            print("map loaded")
+        }
         context.coordinator.mapView = mapView
         return mapView
     }

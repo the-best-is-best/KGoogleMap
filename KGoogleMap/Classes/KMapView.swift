@@ -11,11 +11,14 @@ import UIKit
 
     @objc public init(zoom: Float = 15,
                      markers: [MarkerData]? = nil, // Allow markers to be nil
-                      showCurrentLocation: Bool = false) {
+                      showCurrentLocation: Bool = false,
+                      onMapLoaded: (() -> Void)? = nil) {
         super.init(frame: .zero)
         setupMapView(zoom: zoom,
                      markers: markers ?? [], // Provide an empty array if markers is nil
-                     showCurrentLocation: showCurrentLocation)
+                     showCurrentLocation: showCurrentLocation,
+                     onMapLoaded:onMapLoaded
+        )
     }
 
     required init?(coder: NSCoder) {
@@ -24,11 +27,13 @@ import UIKit
 
     private func setupMapView(zoom: Float,
                               markers: [MarkerData],
-                              showCurrentLocation: Bool) {
+                              showCurrentLocation: Bool,
+                              onMapLoaded: (() -> Void)? = nil) {
         
         mapViewController = KMapViewRepresentable(zoom: zoom,
                                                   markers: markers,
-                                                  showCurrentLocation: showCurrentLocation)
+                                                  showCurrentLocation: showCurrentLocation,
+                                                  onMapLoaded: onMapLoaded)
         
         guard let mapViewController = mapViewController else { return }
 
@@ -106,6 +111,8 @@ import UIKit
     @objc public func setLongClickListener(listener: @escaping (CLLocationCoordinate2D) -> Void) {
         mapViewController?.onMapLongClick = listener
     }
+    
+ 
 
 }
 
