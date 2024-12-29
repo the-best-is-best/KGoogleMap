@@ -11,6 +11,11 @@ import SwiftUI
 public class KMapViewRepresentable: UIViewController, GMSAutocompleteViewControllerDelegate {
     @State private var locationListener: LocationListener
 
+    // Callbacks for click and long press
+       public var onMapClick: ((CLLocationCoordinate2D) -> Void)?
+       public var onMapLongClick: ((CLLocationCoordinate2D) -> Void)?
+
+    
     var mapView: GMSMapView!
     var zoom: Float?
     var markers: [MarkerData] = []
@@ -46,21 +51,49 @@ public class KMapViewRepresentable: UIViewController, GMSAutocompleteViewControl
         mapView = GMSMapView()
         view = mapView
         addMarkers(to: mapView)
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        mapView.addGestureRecognizer(longPressRecognizer)
         
-        locationListener.setLocationUpdateHandler {  newLocation in
-            print("get location")
-            if !self.isMoveCameraToCurrentUserLocation {
-                self.isMoveCameraToCurrentUserLocation = true
-                let initialCamera = GMSCameraPosition.camera(withLatitude: newLocation.coordinate.latitude, longitude: newLocation.coordinate.longitude, zoom: self.zoom ?? 15)
-                self.mapView.animate(to: initialCamera)
-            }
-            if self.currentUserLocation == nil || self.currentUserLocation != newLocation {
-                self.currentUserLocation = newLocation
-                self.addCurrentLocationMarker()
+        locationListener.setLocationUpdateHandler { [weak self] newLocation in
+                  guard let self = self else { return }
+                  DispatchQueue.main.async {
+                      if !self.isMoveCameraToCurrentUserLocation {
+                          self.isMoveCameraToCurrentUserLocation = true
+                          let initialCamera = GMSCameraPosition.camera(
+                              withLatitude: newLocation.coordinate.latitude,
+                              longitude: newLocation.coordinate.longitude,
+                              zoom: self.zoom ?? 15
+                          )
+                          self.mapView.animate(to: initialCamera)
+                      }
+
+                      if self.currentUserLocation == nil || self.currentUserLocation != newLocation {
+                          self.currentUserLocation = newLocation
+                          self.addCurrentLocationMarker()
+                      }
+                  }
+              }
+    }
+    // Handle single tap (onMapClick)
+        public func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+            print("Single tap at: \(coordinate.latitude), \(coordinate.longitude)")
+            
+            // Trigger the callback with the latitude and longitude
+            onMapClick?(coordinate)
+        }
+
+        // Handle long press (onMapLongClick)
+        @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+            if gesture.state == .began {
+                let location = gesture.location(in: mapView)
+                let coordinate = mapView.projection.coordinate(for: location)
+                
+                print("Long press at: \(coordinate.latitude), \(coordinate.longitude)")
+                
+                // Trigger the callback with the latitude and longitude
+                onMapLongClick?(coordinate)
             }
         }
-    }
-
     // Method to add markers to the map
     func addMarkers(to mapView: GMSMapView) {
         guard !markers.isEmpty else {

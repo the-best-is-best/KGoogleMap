@@ -74,20 +74,6 @@ import UIKit
         
     }
 
-//    @objc public func resetCameraPosition() {
-//        if let initialCamera = mapViewController?.camera {
-//            mapViewController?.mapView?.animate(to: initialCamera)
-//        } else {
-//            if let currentLocation = mapViewController?.locationManager.location {
-//                let currentCoordinate = currentLocation.coordinate
-//                let cameraUpdate = GMSCameraUpdate.setTarget(currentCoordinate, zoom: 15.0)
-//                mapViewController?.mapView?.animate(with: cameraUpdate)
-//                print("Resetting camera to current location: \(currentCoordinate)")
-//            } else {
-//                print("Current location is not available to reset camera position.")
-//            }
-//        }
-//    }
 
     @objc public func setCameraPosition(_ cameraPosition: GMSCameraPosition) {
         mapViewController?.mapView?.camera = cameraPosition
@@ -111,6 +97,21 @@ import UIKit
         mapViewController?.didSelectLocation = listener
        }
     
+    @objc public func setClickListener(listener: @escaping (LocationData) -> Void) {
+        mapViewController?.onMapClick = { coordinate in
+            // Convert CLLocationCoordinate2D to LocationData
+            let locationData = LocationData(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            listener(locationData)
+        }
+    }
+
+    @objc public func setLongClickListener(listener: @escaping (LocationData) -> Void) {
+        mapViewController?.onMapLongClick = { coordinate in
+            // Convert CLLocationCoordinate2D to LocationData
+            let locationData = LocationData(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            listener(locationData)
+        }
+    }
 }
 
 

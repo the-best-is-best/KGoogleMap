@@ -11,21 +11,7 @@ import GoogleMaps
 import CoreLocation
 
 struct ContentView: View {
-//
-//    @State private var locationListener: LocationListener
-//
-//       init() {
-//           // Initialize the LocationListener
-//           _locationListener = State(initialValue: LocationListener())
-//
-//           // Set the location update handler in the init
-//           locationListener.setLocationUpdateHandler { newLocation in
-//               print("New location received: \(newLocation.coordinate.latitude), \(newLocation.coordinate.longitude)")
-//           }
-//           
-//           // Confirm the location listener is set up correctly
-//           print("LocationListener initialized.")
-//       }
+
 
     var body: some View {
         VStack {
