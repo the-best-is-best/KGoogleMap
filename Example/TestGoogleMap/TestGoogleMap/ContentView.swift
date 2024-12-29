@@ -54,9 +54,17 @@ struct KMapViewWrapper: UIViewRepresentable {
         var mapView: KMapView?
 
         init(mapView: KMapView?) {
-            self.mapView = mapView
-            Coordinator.shared = self
-        }
+              self.mapView = mapView
+              Coordinator.shared = self
+              // Set up listeners only when mapView is fully initialized
+                  mapView?.setClickListener(listener: { locationData in
+                      print("Clicked location: \(locationData)")
+                  })
+                  mapView?.setLongClickListener(listener: { locationData in
+                      print("Long clicked location: \(locationData)")
+                  })
+              
+          }
 
         func showSearch() {
             guard let mapView = mapView else { return }

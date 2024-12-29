@@ -8,7 +8,7 @@ import GooglePlaces
 import GoogleMaps
 import SwiftUI
 
-public class KMapViewRepresentable: UIViewController, GMSAutocompleteViewControllerDelegate {
+public class KMapViewRepresentable: UIViewController, GMSMapViewDelegate, GMSAutocompleteViewControllerDelegate {
     @State private var locationListener: LocationListener
 
     // Callbacks for click and long press
@@ -49,11 +49,10 @@ public class KMapViewRepresentable: UIViewController, GMSAutocompleteViewControl
     // Setup map view
     private func setupMapView() {
         mapView = GMSMapView()
+        mapView.delegate = self
         view = mapView
         addMarkers(to: mapView)
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-        mapView.addGestureRecognizer(longPressRecognizer)
-        
+       
         locationListener.setLocationUpdateHandler { [weak self] newLocation in
                   guard let self = self else { return }
                   DispatchQueue.main.async {
@@ -76,24 +75,19 @@ public class KMapViewRepresentable: UIViewController, GMSAutocompleteViewControl
     }
     // Handle single tap (onMapClick)
         public func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-            print("Single tap at: \(coordinate.latitude), \(coordinate.longitude)")
             
             // Trigger the callback with the latitude and longitude
             onMapClick?(coordinate)
         }
 
-        // Handle long press (onMapLongClick)
-        @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
-            if gesture.state == .began {
-                let location = gesture.location(in: mapView)
-                let coordinate = mapView.projection.coordinate(for: location)
-                
-                print("Long press at: \(coordinate.latitude), \(coordinate.longitude)")
-                
-                // Trigger the callback with the latitude and longitude
-                onMapLongClick?(coordinate)
-            }
+            // Handle long press (onMapLongClick)
+        public func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
+            
+            // Trigger the callback with the latitude and longitude
+            onMapLongClick?(coordinate)
         }
+
+
     // Method to add markers to the map
     func addMarkers(to mapView: GMSMapView) {
         guard !markers.isEmpty else {
