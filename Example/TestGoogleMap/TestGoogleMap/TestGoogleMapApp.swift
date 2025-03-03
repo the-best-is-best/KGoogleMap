@@ -12,7 +12,7 @@ import KGoogleMap
 struct TestGoogleMapApp: App {
     
      init(){
-         KGoogleMapInit.provideAPIKey(key: "AIzaSyDJxBZCH0AwJnUTg6R8zGDy2KmwVaKXkJk" )
+         KGoogleMapInit.provideAPIKey(key: "AIzaSyCfDTGDYO4-EngFi8_89J3QalqSGnPeQCg" )
     }
     
     var body: some Scene {

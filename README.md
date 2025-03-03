@@ -12,11 +12,20 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Installation
 
-KGoogleMap is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+KGoogleMap is available through [CocoaPods](https://cocoapods.org) and Swift Package Manager (SPM).
+
+### CocoaPods
+To install via CocoaPods, add the following line to your Podfile:
 
 ```ruby
 pod 'KGoogleMap'
+```
+
+### Swift Package Manager (SPM)
+To install via Swift Package Manager, add the following dependency to your `Package.swift`:
+
+```swift
+.package(url: "https://github.com/yourrepo/KGoogleMap.git", from: "1.0.0")
 ```
 
 ## Author
@@ -29,4 +38,5 @@ KGoogleMap is available under the MIT license. See the LICENSE file for more inf
 
 ## Note
 
-This package create for use it in kotlin multi-platform
+This package was created for use in Kotlin Multiplatform. The CocoaPods version will not be updated or maintained going forward. It is recommended to use Swift Package Manager (SPM) instead.
+
