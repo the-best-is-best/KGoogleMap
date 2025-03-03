@@ -1,7 +1,0 @@
-platform :ios, '15.0'  # Set the iOS deployment target
-
-# Test target
-target 'KGoogleMap_Tests' do
-  inherit! :search_paths  # Inherit the search paths from the main target
-  pod 'KGoogleMap', :path => '../'
-end

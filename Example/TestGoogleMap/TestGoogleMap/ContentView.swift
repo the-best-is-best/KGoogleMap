@@ -23,7 +23,7 @@ struct ContentView: View {
                             markers: [],
                             showCurrentLocation: true)
                 .frame(height: 300)
-                .edgesIgnoringSafeArea(.all)
+                .ignoresSafeArea()
 
             Button(action: {
                 // Optional action when button is clicked

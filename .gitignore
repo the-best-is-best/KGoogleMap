@@ -39,3 +39,5 @@ Example/Pods/Manifest.lock
 Example/Pods/Local Podspecs/KGoogleMap.podspec.json
 *.lock
 Pods
+.swiftpm
+.build
