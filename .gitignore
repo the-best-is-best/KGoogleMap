@@ -41,3 +41,6 @@ Example/Pods/Local Podspecs/KGoogleMap.podspec.json
 Pods
 .swiftpm
 .build
+build
+build_output
+KGoogleMap.xcframework
