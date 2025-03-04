@@ -1,10 +1,10 @@
-// swift-tools-version: 5.5
+// swift-tools-version:5.5
 import PackageDescription
 
 let package = Package(
     name: "KGoogleMap",
     platforms: [
-        .iOS(.v15) // ✅ تأكيد دعم iOS فقط
+        .iOS(.v15)
     ],
     products: [
         .library(name: "KGoogleMap", type: .dynamic, targets: ["KGoogleMap"])
@@ -26,15 +26,22 @@ let package = Package(
             cSettings: [
                 .define("PLATFORM_IOS"),
                 .headerSearchPath("Sources/KGoogleMap/include")
-            ], swiftSettings: [
+            ],
+            swiftSettings: [
                 .define("PLATFORM_IOS")
             ],
             linkerSettings: [
                 .linkedFramework("UIKit"),
-                .linkedFramework("Foundation"),
-                .linkedFramework("Security"),
-          
+                  .linkedFramework("Foundation"),
+                  .linkedFramework("Security"),
+                  .linkedFramework("CoreLocation"),
+                  .linkedFramework("GoogleMaps"),
+                  .linkedFramework("GooglePlaces"),
+                  .linkedFramework("CoreGraphics"),
+                  .linkedFramework("GLKit"),
+                  .linkedFramework("ImageIO")
             ]
+
         )
     ]
 )
