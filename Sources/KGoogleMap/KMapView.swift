@@ -10,7 +10,7 @@ import UIKit
     private var mapViewController: KMapViewRepresentable?
 
     @objc public init(zoom: Float = 15,
-                     markers: [MarkerData]? = nil, // Allow markers to be nil
+                      markers: [MarkerData]? = nil, // Allow markers to be nil
                       showCurrentLocation: Bool = false,
                       onMapLoaded: (() -> Void)? = nil) {
         super.init(frame: .zero)
@@ -80,8 +80,10 @@ import UIKit
     }
 
 
-    @objc public func setCameraPosition(_ cameraPosition: GMSCameraPosition) {
-        mapViewController?.mapView?.camera = cameraPosition
+    @objc public func setCameraPosition(_ cameraPosition: CameraPosition) {
+        mapViewController?.mapView?.camera = GMSCameraPosition(
+            latitude: cameraPosition.latitude, longitude: cameraPosition.longitude, zoom: cameraPosition.zoom
+        )
     }
 
     @objc public func showUserLocation(_ show: Bool) {
