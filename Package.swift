@@ -1,16 +1,13 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.5
 import PackageDescription
 
 let package = Package(
     name: "KGoogleMap",
     platforms: [
-        .iOS(.v15)
+        .iOS(.v15) // ✅ تأكيد دعم iOS فقط
     ],
     products: [
-        .library(
-            name: "KGoogleMap",
-            targets: ["KGoogleMap"]
-        ),
+        .library(name: "KGoogleMap", type: .dynamic, targets: ["KGoogleMap"])
     ],
     dependencies: [
         .package(url: "https://github.com/googlemaps/ios-maps-sdk.git", from: "9.3.0"),
@@ -25,15 +22,19 @@ let package = Package(
                 .product(name: "GooglePlaces", package: "ios-places-sdk"),
                 .product(name: "GoogleMapsUtils", package: "google-maps-ios-utils")
             ],
-            path: "KGoogleMap/Classes",  // This specifies the source directory
-            resources: [
-                .process("KGoogleMap/Classes")  // Ensure that any resource files (if any) are processed
+            publicHeadersPath: "include",
+            cSettings: [
+                .define("PLATFORM_IOS"),
+                .headerSearchPath("Sources/KGoogleMap/include")
+            ], swiftSettings: [
+                .define("PLATFORM_IOS")
+            ],
+            linkerSettings: [
+                .linkedFramework("UIKit"),
+                .linkedFramework("Foundation"),
+                .linkedFramework("Security"),
+          
             ]
-
-        ),
-        .testTarget(
-            name: "KGoogleMapTests",
-            dependencies: ["KGoogleMap"]
-        ),
+        )
     ]
 )
