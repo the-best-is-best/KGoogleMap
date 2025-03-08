@@ -7,7 +7,7 @@ let package = Package(
         .iOS(.v15)
     ],
     products: [
-        .library(name: "KGoogleMap", targets: ["KGoogleMap"])
+        .library(name: "KGoogleMap", type: .dynamic, targets: ["KGoogleMap"])
     ],
     dependencies: [
         .package(url: "https://github.com/googlemaps/ios-maps-sdk.git", from: "9.3.0"),
@@ -21,6 +21,9 @@ let package = Package(
                 .product(name: "GoogleMaps", package: "ios-maps-sdk"),
                 .product(name: "GooglePlaces", package: "ios-places-sdk"),
                 .product(name: "GoogleMapsUtils", package: "google-maps-ios-utils")
+            ],
+            swiftSettings: [
+                   .unsafeFlags(["-Onone"], .when(configuration: .debug))
             ],
            
             linkerSettings: [

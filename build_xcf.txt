@@ -1,0 +1,7 @@
+rm -rf ~/Library/Developer/Xcode/DerivedData
+xcodebuild -scheme KGoogleMap -destination 'generic/platform=iOS' -configuration Release -derivedDataPath ./build
+xcodebuild -scheme KGoogleMap -destination 'generic/platform=iOS Simulator' -configuration Release -derivedDataPath ./build
+xcodebuild -create-xcframework \
+    -framework ./build/Build/Products/Release-iphoneos/PackageFrameworks/KGoogleMap.framework \
+    -framework ./build/Build/Products/Release-iphonesimulator/PackageFrameworks/KGoogleMap.framework \
+    -output ./build/KGoogleMap.xcframework
